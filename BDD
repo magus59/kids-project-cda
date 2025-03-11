@@ -1,0 +1,60 @@
+-- create database kids;
+-- use kids;
+
+CREATE TABLE Pathologie(
+ID_Pathologie INT,
+nom_pathologie VARCHAR(50),
+description_pathologie TEXT,
+PRIMARY KEY(ID_Pathologie),
+UNIQUE(nom_pathologie)
+);
+
+CREATE TABLE Symptome(
+ID_Symptome INT,
+nom_symptome VARCHAR(50),
+PRIMARY KEY(ID_Symptome),
+UNIQUE(nom_symptome)
+);
+
+CREATE TABLE Utilisateur(
+ID_Utilisateur INT,
+pseudo VARCHAR(50) NOT NULL,
+email VARCHAR(50) NOT NULL,
+role VARCHAR(50) NOT NULL,
+mot_de_passe VARCHAR(50) NOT NULL,
+PRIMARY KEY(ID_Utilisateur),
+UNIQUE(pseudo),
+UNIQUE(email)
+);
+
+CREATE TABLE Faq(
+ID_faq VARCHAR(50),
+question VARCHAR(2000) NOT NULL,
+reponse VARCHAR(2000),
+PRIMARY KEY(ID_faq)
+);
+
+CREATE TABLE consulter(
+ID_Pathologie INT,
+ID_Utilisateur INT,
+favori boolean NOT NULL,
+PRIMARY KEY(ID_Pathologie, ID_Utilisateur),
+FOREIGN KEY(ID_Pathologie) REFERENCES Pathologie(ID_Pathologie),
+FOREIGN KEY(ID_Utilisateur) REFERENCES Utilisateur(ID_Utilisateur)
+);
+
+CREATE TABLE provoquer(
+ID_Pathologie INT,
+ID_Symptome INT,
+PRIMARY KEY(ID_Pathologie, ID_Symptome),
+FOREIGN KEY(ID_Pathologie) REFERENCES Pathologie(ID_Pathologie),
+FOREIGN KEY(ID_Symptome) REFERENCES Symptome(ID_Symptome)
+);
+
+CREATE TABLE lire(
+ID_Utilisateur INT,
+ID_faq VARCHAR(50),
+PRIMARY KEY(ID_Utilisateur, ID_faq),
+FOREIGN KEY(ID_Utilisateur) REFERENCES Utilisateur(ID_Utilisateur),
+FOREIGN KEY(ID_faq) REFERENCES Faq(ID_faq)
+);
