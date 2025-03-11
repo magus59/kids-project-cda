@@ -20,5 +20,5 @@ EXPOSE 3001
 CMD ["node", "index.js"]
 
 
-# docker build . -t diag-api-node
+# docker build . -t dia-api-nodeg
 # docker run -p 3001:3001  diag-api-node
