@@ -1,6 +1,10 @@
 const UserService = require("../Services/UserService");
 const userSchema = require("../validations/UserValidation");
+const bcrypt = require("bcrypt");
 const { z } = require("zod");
+const jwt = require("jsonwebtoken");
+
+const JWT_SECRET = "dassistProject";
 
 class UserController {
     async getAllUser(request, response) {
@@ -30,6 +34,8 @@ class UserController {
         try {
             const validatedData = userSchema.parse(request.body);
 
+            validatedData.password = await bcrypt.hash(validatedData.password, 10);
+
             const user = await UserService.addUser(validatedData);
             return response.status(201).json(user);
         } catch (error) {
@@ -49,6 +55,10 @@ class UserController {
             }
 
             const validatedData = userSchema.partial().parse(request.body);
+
+            if (validatedData.password) {
+                validatedData.password = await bcrypt.hash(validatedData.password, 10);
+            }
 
             const updatedUser = await UserService.updateUser(request.params.id, validatedData);
             return response.json(updatedUser);
@@ -73,6 +83,37 @@ class UserController {
         } catch (error) {
             console.error(error);
             return response.status(500).json({ error: "Erreur lors de la suppression de l'utilisateur" });
+        }
+    }
+
+    async login(request, response) {
+        try {
+            const { email, password } = request.body;
+
+            const user = await UserService.getUserByEmail(email); 
+
+            if (!user) {
+                return response.status(404).json({ error: "Utilisateur non trouvé" });
+            }
+
+            const isMatch = await bcrypt.compare(password, user.password);
+
+            if (!isMatch) {
+                return response.status(400).json({ error: "Mot de passe incorrect" });
+            }
+
+            const payload = {
+                id: user.ID_Utilisateur,
+                pseudo: user.pseudo,
+                role: user.role,
+            };
+
+            const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' }); 
+
+            return response.json({ user, token });
+        } catch (error) {
+            console.error(error);
+            return response.status(500).json({ error: "Erreur lors de la connexion" });
         }
     }
 }
