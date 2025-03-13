@@ -21,18 +21,19 @@ User.init(
       unique: true,
     },
     role: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.ENUM("user", "admin"),
       allowNull: false,
+      defaultValue: "user",
     },
     password: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
   },
   {
     sequelize,
     modelName: "User",
-    tableName: "utilisateur", 
+    tableName: "utilisateur",
     timestamps: false,
   }
 );

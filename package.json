@@ -23,7 +23,8 @@
     "mysql2": "^3.10.3",
     "nodemailer": "^6.9.14",
     "nodemon": "^3.1.4",
-    "sequelize": "^6.37.3"
+    "sequelize": "^6.37.3",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
