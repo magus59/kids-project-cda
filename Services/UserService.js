@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require("../Models/User");
 
-const JWT_SECRET = "dassistProject"; 
+const JWT_SECRET = process.env.JWT_SECRET; 
 
 class UserService {
   async getAllUser() {

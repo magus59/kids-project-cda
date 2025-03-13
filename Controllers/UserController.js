@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const { z } = require("zod");
 const jwt = require("jsonwebtoken");
 
-const JWT_SECRET = "dassistProject";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 class UserController {
     async getAllUser(request, response) {

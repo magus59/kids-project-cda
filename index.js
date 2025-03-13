@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const app = express();
-const port = 3001;
 
 require("./Models/Association");
 const PathologieRoutes = require("./Routes/PathologieRoutes");
@@ -27,6 +26,7 @@ app.use((req, res) => {
   res.status(404).send('Route non trouvée');
 });
 
+const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log(`Votre serveur est lancé sur http://127.0.0.1:${port}`);
 });
