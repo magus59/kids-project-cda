@@ -9,6 +9,7 @@ require("./Models/Association");
 const PathologieRoutes = require("./Routes/PathologieRoutes");
 const SymptomeRoutes = require("./Routes/SymptomeRoutes");
 const UserRoutes = require("./Routes/UserRoutes");
+const FaqRoutes = require("./Routes/FaqRoutes");
 
 app.use(express.json());
 app.use(cors());
@@ -21,6 +22,8 @@ app.get("/test", (req, res) => {
 app.use("/pathologie", PathologieRoutes);
 app.use("/symptome", SymptomeRoutes);
 app.use("/user", UserRoutes);
+app.use("/faq", FaqRoutes);
+
 
 app.use((req, res) => {
   res.status(404).send('Route non trouvée');
