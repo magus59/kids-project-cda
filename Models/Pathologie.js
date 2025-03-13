@@ -8,6 +8,7 @@ Pathologie.init(
     ID_Pathologie: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
     },
     nom_pathologie: {
         type: DataTypes.STRING(50),

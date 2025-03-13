@@ -8,6 +8,7 @@ Symptome.init(
         ID_Symptome: {
             type: DataTypes.INTEGER,
             primaryKey: true,
+            autoIncrement: true,
         },
         nom_symptome: {
             type: DataTypes.STRING(50),
