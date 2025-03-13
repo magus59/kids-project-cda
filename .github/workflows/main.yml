@@ -1,0 +1,25 @@
+name: ci/cd projet CDA
+
+on:
+  push:
+   branches: [ main ]
+
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v3
+
+      - name: Configurer node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: installation des dépendence
+        run: npm install
+
+      - name: lancement des tests
+        run: npm run test
