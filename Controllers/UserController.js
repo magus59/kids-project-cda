@@ -90,7 +90,7 @@ class UserController {
         try {
             const { email, password } = request.body;
 
-            const user = await UserService.getUserByEmail(email); 
+            const user = await UserService.authenticateUser(email, password);
 
             if (!user) {
                 return response.status(404).json({ error: "Utilisateur non trouvé" });

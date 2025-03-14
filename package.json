@@ -36,7 +36,6 @@
     "@types/jest": "^29.5.14",
     "babel-jest": "^29.7.0",
     "babel-plugin-transform-runtime": "^6.23.0",
-    "chai": "^5.1.2",
     "jest": "^29.7.0",
     "sinon": "^19.0.2",
     "supertest": "^7.0.0"
