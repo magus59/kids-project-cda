@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require("../Models/User");
+const bcrypt = require('bcrypt');
 
 const JWT_SECRET = process.env.JWT_SECRET; 
 
@@ -46,24 +47,19 @@ class UserService {
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
-      throw new Error("Utilisateur non trouvé");
+      console.log("Aucun utilisateur trouvé pour cet email:", email);
+      return null; 
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      throw new Error("Mot de passe incorrect");
+      console.log("Mot de passe incorrect pour l'utilisateur:", email);
+      return null;
     }
 
-    const payload = {
-      id: user.ID_Utilisateur,
-      pseudo: user.pseudo,
-      role: user.role,
-    };
-
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
-
-    return { user, token };
+    return user;
   }
+
 }
 
 module.exports = new UserService();

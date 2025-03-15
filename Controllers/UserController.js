@@ -89,33 +89,41 @@ class UserController {
     async login(request, response) {
         try {
             const { email, password } = request.body;
-
+    
+            console.log("Email reçu:", email);
+            console.log("Mot de passe reçu:", password);
+    
             const user = await UserService.authenticateUser(email, password);
-
+            console.log("Utilisateur trouvé:", user);
+    
             if (!user) {
                 return response.status(404).json({ error: "Utilisateur non trouvé" });
             }
-
+    
             const isMatch = await bcrypt.compare(password, user.password);
-
+            console.log("Mot de passe vérifié:", isMatch);
+    
             if (!isMatch) {
                 return response.status(400).json({ error: "Mot de passe incorrect" });
             }
-
+    
             const payload = {
                 id: user.ID_Utilisateur,
                 pseudo: user.pseudo,
                 role: user.role,
             };
-
-            const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' }); 
-
+    
+            const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
+    
             return response.json({ user, token });
         } catch (error) {
-            console.error(error);
+            console.error("Erreur dans la connexion:", error);
             return response.status(500).json({ error: "Erreur lors de la connexion" });
         }
     }
+    
+
+    
 }
 
 module.exports = new UserController();
